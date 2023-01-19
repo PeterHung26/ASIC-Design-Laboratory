@@ -11,6 +11,11 @@ module adder_8bit
 	output wire [7:0] sum,
 	output wire overflow
 );
-
+	wire tmp1;
+	wire tmp2;
+	wire tmp3;
+	assign tmp1 = a ^ b;
+	assign sum = carry_in ^ tmp1;
+	assign 
 	// STUDENT: Fill in the correct port map with parameter override syntax for using your n-bit ripple carry adder design to be an 8-bit ripple carry adder design
 endmodule
