@@ -53,14 +53,29 @@ adder_16bit DUT (.a(tb_a), .b(tb_b), .carry_in(tb_carry_in), .sum(tb_sum), .over
 initial begin
   // Create the test-vector array with enough slots for test cases
   // STUDENT TODO: Update the array declaration to have enough slots
-  tb_test_cases = new[1];
+  tb_test_cases = new[5];
 
   // First Test Case/Test-Vector
   tb_test_cases[0].test_name = "Zeros Check";
   tb_test_cases[0].test_a    = '0;
   tb_test_cases[0].test_b    = '0;
   tb_test_cases[0].test_cin  = 1'b0;
-
+  tb_test_cases[1].test_name = "First Check";
+  tb_test_cases[1].test_a    = 16'hF633;
+  tb_test_cases[1].test_b    = 16'h0022;
+  tb_test_cases[1].test_cin  = 1'b0;
+  tb_test_cases[2].test_name = "Second Check";
+  tb_test_cases[2].test_a    = 16'h0034;
+  tb_test_cases[2].test_b    = 16'hE568;
+  tb_test_cases[2].test_cin  = 1'b0;
+  tb_test_cases[3].test_name = "Third Check";
+  tb_test_cases[3].test_a    = 16'hF596;
+  tb_test_cases[3].test_b    = 16'hE156;
+  tb_test_cases[3].test_cin  = 1'b0;
+  tb_test_cases[4].test_name = "Fourth Check";
+  tb_test_cases[4].test_a    = 16'h0020;
+  tb_test_cases[4].test_b    = 16'h0026;
+  tb_test_cases[4].test_cin  = 1'b0;
   // STUDENT TODO: Add your additional test cases here after increasing the array size
 end
 
