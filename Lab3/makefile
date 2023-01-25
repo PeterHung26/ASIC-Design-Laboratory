@@ -283,7 +283,7 @@ DEP_SUB_FILES :=
 
 # Set the default value of the main source file to an empty string since it will be
 # overwritten by each rule where it is used anyways
-MAIN_FILE :=
+MAIN_FILE := adder_16.sv
 
 # Set the module's name to always be the same as the basename of the file
 # (a.k.a. the file name without the file extension)
@@ -356,6 +356,23 @@ report_power -hier >> reports/$(MOD_NAME).rep
 
 # Step 5: Output final VHDL and Verilog files
 write_file -format verilog -hierarchy -output "mapped/$(MOD_NAME).v"
+
+# Second Compilation Run. Repeat Step 2 to 5.
+# Step 2: Put the max delay constraints in the second pass only
+set_max_delay 0.713 -from "b[0]" -to "sum[15]"
+
+# Step 3: Compile the design
+set_structure true -design $(MOD_NAME) -boolean true -boolean_effort medium
+compile -map_effort high -boundary_optimization
+
+# Step 4: Output reports
+report_timing -path full -delay max -max_paths 1 -nworst 1 > reports/$(MOD_NAME).rep
+report_area >> reports/$(MOD_NAME).rep
+report_power -hier >> reports/$(MOD_NAME).rep
+
+# Step 5: Output final VHDL and Verilog files
+write_file -format verilog -hierarchy -output "mapped/$(MOD_NAME).v"
+
 echo "\nScript Done\n"
 echo "\nChecking Design\n"
 check_design
