@@ -13,7 +13,7 @@ module sync_high (
 );
 reg meta;
 always_ff @( posedge clk, negedge n_rst ) 
-begin : RESET_LOW_SYNCHRONIZER
+begin : RESET_HIGH_SYNCHRONIZER
     if(n_rst == 1'b0)
     begin
         meta <= 1'b1;
