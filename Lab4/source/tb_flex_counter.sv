@@ -24,7 +24,7 @@ module tb_flex_counter();
   localparam  CLEAR_OUTPUT_VALUE = INACTIVE_VALUE;
   localparam  ROLLOVER_FLAG_0 = 1'b0;
   localparam  ROLLOVER_FLAG_1 = 1'b1;
-  localparam  ROLLOVER_VALUE = 5;
+  localparam  ROLLOVER_VALUE = 15;
 
   localparam  NUM_CNT_BITS = 4;
   // Declare DUT portmap signals
@@ -293,8 +293,7 @@ module tb_flex_counter();
     end
     @(negedge tb_clk);
     check_output( dummy, ROLLOVER_FLAG_0, "after running (ROLLOVER_VALUE)/2 times");
-    tb_clear = 1;
-    #(CLK_PERIOD);
+    clear_DUT();
     if(tb_count_out == 0)
     begin
       $info("Clear has higher priority than counter_enable",dummy);
@@ -303,7 +302,67 @@ module tb_flex_counter();
     begin
       $info("Counter_enable has higher priority than clear",dummy);
     end
+
+
+
+    // ************************************************************************
+    // Test Case 6: For 100 % automated grading
+    // ************************************************************************
+    @(negedge tb_clk); 
+    tb_rollover_val = 0;
+    tb_test_num = tb_test_num + 1;
+    tb_test_case = "For 100 percent automated grading";
+    // Start out with inactive value of counter_enable and clear and reset the DUT to isolate from prior tests
+    tb_count_enable = INACTIVE_VALUE;
+    tb_clear = INACTIVE_VALUE;
+    tb_stream_test_num = 0;
+    dummy = 8'hFFFFFFFF;
+    tb_clear = 1;
+    reset_dut();
     tb_clear = 0;
+    tb_rollover_val = ROLLOVER_VALUE;
+    tb_stream_test_num = 1;
+    // Enable the counter and start the test case
+    tb_count_enable = 1'b1;
+    dummy = 0;
+    for(tb_stream_test_num = 1; tb_stream_test_num <= 8'hFFFFFFFF; tb_stream_test_num = tb_stream_test_num + 1)
+    begin
+      if(((tb_stream_test_num%2) == 0) || ((tb_stream_test_num%3) == 0)) // Counter is enabled
+      begin
+        tb_count_enable = 1'b1;
+        // Update the tag for the current stream iteration
+        $sformat(tb_stream_check_tag, "after enable iteration %d", tb_stream_test_num);
+        @(posedge tb_clk);
+        dummy = dummy + 1;
+        // Move away from risign edge and allow for propagation delays before checking 
+        @(negedge tb_clk);
+        if(((dummy%ROLLOVER_VALUE) == 0) && (dummy != 0))
+        begin
+          check_output(dummy%ROLLOVER_VALUE, ROLLOVER_FLAG_0, tb_stream_check_tag);
+        end
+        else
+        begin
+          check_output(ROLLOVER_VALUE, ROLLOVER_FLAG_1, tb_stream_check_tag);
+        end
+      end
+      else // Counter is disabled
+      begin
+        tb_count_enable = 1'b0;
+        // Update the tag for the current stream iteration
+        $sformat(tb_stream_check_tag, "after disable iteration %d", tb_stream_test_num);
+        @(posedge tb_clk);
+        // Move away from risign edge and allow for propagation delays before checking 
+        @(negedge tb_clk);
+        if(((dummy%ROLLOVER_VALUE) == 0) && (dummy != 0))
+        begin
+          check_output(ROLLOVER_VALUE, ROLLOVER_FLAG_1, tb_stream_check_tag);
+        end
+        else
+        begin
+          check_output(dummy%ROLLOVER_VALUE, ROLLOVER_FLAG_0, tb_stream_check_tag);
+        end
+      end
+    end
 
   end
 endmodule

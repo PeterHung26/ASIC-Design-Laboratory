@@ -17,6 +17,7 @@ module flex_counter #(
     output reg rollover_flag
 );
 reg [NUM_CNT_BITS-1:0] next_output;
+reg next_rollover_flag;
 always_ff @(posedge clk, negedge n_rst) 
 begin : OUTPUT
     if(n_rst == 0) // Make counter back to initial value
@@ -24,41 +25,42 @@ begin : OUTPUT
         count_out <= 0;
         rollover_flag <= 0;
     end
-    else if(clear == 1)
-    begin
-        count_out <= 0;
-        rollover_flag <= 0;
-    end
     else
     begin
         count_out <= next_output;
-        if(next_output == rollover_val)
-        begin
-            rollover_flag <= 1;
-        end
-        else
-        begin
-            rollover_flag <= 0;
-        end
+        rollover_flag <= next_rollover_flag;
     end
 end
 
 always_comb 
 begin : NEXT_STATE
-    if(count_enable == 1'b1)
+    if(clear == 1)
     begin
-        if(rollover_flag == 1'b1)
+      next_output = 0;
+      next_rollover_flag = 0;
+    end
+    else if(count_enable == 1'b1)
+    begin
+        if(count_out == rollover_val)
         begin
             next_output = 1;
+            next_rollover_flag = 0;
+        end
+        else if(count_out == rollover_val-1)
+        begin
+            next_output = count_out + 1;
+            next_rollover_flag = 1;
         end
         else
         begin
             next_output = count_out + 1;
+            next_rollover_flag = 0;
         end
     end
     else
     begin
         next_output = count_out;
+        next_rollover_flag = rollover_flag;
     end
 end
 
