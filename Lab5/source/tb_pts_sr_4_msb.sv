@@ -282,6 +282,33 @@ module tb_pts_sr_4_msb();
     end
 
     // STUDENT TODO: Add more test cases here
+    // ************************************************************************
+    // Test Case 4: Four Clock Cycles with shift not enable
+    // ************************************************************************
+    tb_test_num  = tb_test_num + 1;
+    tb_test_case = "Shift Not Enable";
+    // Start out with inactive value and reset the DUT to isolate from prior tests
+    tb_parallel_in = '1;
+    reset_dut();
+
+    // Define the test data stream for this test case
+    tb_test_data = 4'b1010;
+
+    // Bootstrap the expected output signal
+    tb_expected_ouput = RESET_OUTPUT_VALUE;
+
+    // Load the stream to send in SR sized chunks
+    load_value(tb_test_data);
+    tb_expected_ouput = tb_test_data[SR_MAX_BIT];
+    // Disconiguously stream out all of the bits in the provided input vector
+    for(tb_bit_num = 0; tb_bit_num < 4; tb_bit_num++) begin
+      // Update the expected output (serial out MSB-first)
+      @ (posedge tb_clk);
+      #(PROPAGATION_DELAY);
+      // Check that the correct value was sent out for this bit
+      $sformat(tb_stream_check_tag, "during cycles %0d", tb_bit_num);
+      check_output(tb_stream_check_tag);
+    end
 
   end
 endmodule
