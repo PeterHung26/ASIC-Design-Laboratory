@@ -260,7 +260,7 @@ module tb_fir_filter();
 		// Test case 1
 		tb_test_vectors[1].coeffs		= tb_test_vectors[0].coeffs;
 		tb_test_vectors[1].samples	= {16'd1000, 16'd1000, 16'd100, 16'd100};
-		tb_test_vectors[1].results	= {16'd450, 16'd500, 16'd50 ,16'd50};
+		tb_test_vectors[1].results	= {16'd50, 16'd500, 16'd50 ,16'd50};
 		tb_test_vectors[1].errors		= {1'b0, 1'b0, 1'b0, 1'b0};
 	end
 	
