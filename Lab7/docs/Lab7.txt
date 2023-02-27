@@ -1,0 +1,26 @@
+7.1
+A:
+1. Two Clock Cycles
+2. Four Clock Cycles
+7.2
+A:
+1. filtered images are much darker than original images. Yes, it makes sense because FIR filter is a low pass filter and it passes through the darker pixels and blocks the bright pixels.
+2. 
+	(1): integer fopen(const char *filename, const char *mode)
+	(2): integer fscanf(integer FILE_STREAM, const char *format, ...)
+	(3): long integer ftell(integer FILE_STREAM)
+	(4): integer fseek(integer FILE_STREAM, long integer offset, integer whence)
+	(5): integer fclose(integer FILE_STREAM)
+	(6): fwrite(integer FILE_STREAM, const char *format, data_want_to_write_in);
+3. 
+	b: binary value	
+	d: decimal values
+	o: octal values
+	h or x: hexadecimal values
+	c: a single character
+	f: a floating point number
+	s: a string
+	%: the percent character
+	\": " character
+	\\: \ character
+	%%: % character 
