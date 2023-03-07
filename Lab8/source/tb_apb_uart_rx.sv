@@ -358,7 +358,7 @@ module tb_apb_uart_rx();
         #data_period;
         
         // Send data bits
-        for(i = 0; i < DATA_SIZE; i = i + 1)
+        for(i = 0; i < tb_data_size; i = i + 1)
         begin
         tb_serial_in = data[i];
         #data_period;
@@ -472,7 +472,7 @@ initial begin
   tb_expected_data_read  = 1'b0;
   tb_expected_bit_period = tb_test_bit_period;
   tb_expected_data_size  = tb_test_data_size;
-  check_outputs_apb("after attempting to configure a 10-cycle bit period");
+  check_outputs_apb("after attempting to configure a 8 bit data size period");
 
   //*****************************************************************************
   // Test Case: Send the Serial in Data to UART
@@ -511,6 +511,107 @@ initial begin
   tb_test_num = tb_test_num + 1;
 
   tb_test_data     = 8'b11010101;
+  enqueue_transaction(1'b1, 1'b0, ADDR_RX_DATA, tb_test_data, 1'b0);
+  execute_transactions(1);
+  // Check the DUT outputs
+  tb_expected_data_read  = 1'b1;
+  tb_expected_bit_period = tb_test_bit_period;
+  tb_expected_data_size  = tb_test_data_size;
+  check_outputs_apb("after reading the Rx Data");
+  @(negedge tb_clk);
+  // Define expected ouputs for this test case
+  // For a good packet RX Data value should match data sent
+  tb_expected_rx_data       = tb_test_data;
+  // Valid stop bit ('1') -> Valid data -> Active data ready output
+  tb_expected_data_ready    = 1'b0; 
+  // Framing error if and only if bad stop_bit ('0') was sent
+  tb_expected_framing_error = 1'b0;
+  // Not intentionally creating an overrun condition -> overrun should be 0
+  tb_expected_overrun       = 1'b0;
+  check_outputs_rcv();
+
+  //*****************************************************************************
+  // Test Case: Configure the Bit Period Settings to 1000
+  //*****************************************************************************
+  // Update Navigation Info
+  tb_test_case     = "Configure UART Bit Period Value to 1000-cycle";
+  tb_test_case_num = tb_test_case_num + 1;
+  tb_test_num = tb_test_num + 1;
+
+  // Reset the DUT to isolate from prior to isolate from prior test case
+  reset_dut();
+
+  // Enque the needed transactions (Overall period of 1000 clocks)
+  tb_test_bit_period = 14'd1000;
+  enqueue_transaction(1'b1, 1'b1, ADDR_BIT_CR0, tb_test_bit_period[7:0], 1'b0);
+  enqueue_transaction(1'b1, 1'b1, ADDR_BIT_CR1, {2'b00, tb_test_bit_period[13:8]}, 1'b0);
+
+  // Run the transactions via the model
+  execute_transactions(2);
+
+  // Check the DUT outputs
+  tb_expected_data_read  = 1'b0;
+  tb_expected_bit_period = tb_test_bit_period;
+  tb_expected_data_size  = RESET_DATA_SIZE;
+  check_outputs_apb("after attempting to configure a 1000-cycle bit period");
+
+  //*****************************************************************************
+  // Test Case: Configure the Data Size Settings to 5 bits
+  //*****************************************************************************
+  // Update Navigation Info
+  tb_test_case     = "Configure UART Data_Size to 5 bits";
+  tb_test_case_num = tb_test_case_num + 1;
+  tb_test_num = tb_test_num + 1;
+
+  tb_test_data_size = 4'd8;
+  enqueue_transaction(1'b1, 1'b1, ADDR_DATA_CR, {4'b0, tb_test_data_size}, 1'b0);
+  
+  // Run the transactions via the model
+  execute_transactions(1);
+
+  // Check the DUT outputs
+  tb_expected_data_read  = 1'b0;
+  tb_expected_bit_period = tb_test_bit_period;
+  tb_expected_data_size  = tb_test_data_size;
+  check_outputs_apb("after attempting to configure a 8 bit data size period");
+
+  //*****************************************************************************
+  // Test Case: Send the Serial in Data to UART
+  //*****************************************************************************
+  // Update Navigation Info
+  tb_test_case     = "Send the Serial in Data to UART";
+  tb_test_case_num = tb_test_case_num + 1;
+  tb_test_num = tb_test_num + 1;
+
+  tb_test_data       = 8'b00001100;
+  tb_test_stop_bit   = 1'b1;
+  tb_test_bit_period_rcv = 2500;
+
+  // Define expected ouputs for this test case
+  // For a good packet RX Data value should match data sent
+  tb_expected_rx_data       = tb_test_data;
+  // Valid stop bit ('1') -> Valid data -> Active data ready output
+  tb_expected_data_ready    = tb_test_stop_bit; 
+  // Framing error if and only if bad stop_bit ('0') was sent
+  tb_expected_framing_error = ~tb_test_stop_bit;
+  // Not intentionally creating an overrun condition -> overrun should be 0
+  tb_expected_overrun       = 1'b0;
+
+  // Send packet
+  send_packet(tb_test_data, tb_test_stop_bit, tb_test_bit_period_rcv);
+  // Wait for 2 data periods to allow DUT to finish processing the packet
+  #(tb_test_bit_period_rcv * 2);
+  check_outputs_rcv();
+
+  //*****************************************************************************
+  // Test Case: Read the Rx Data
+  //*****************************************************************************
+  // Update Navigation Info
+  tb_test_case     = "Read the Rx Data";
+  tb_test_case_num = tb_test_case_num + 1;
+  tb_test_num = tb_test_num + 1;
+
+  tb_test_data     = 8'b00001100;
   enqueue_transaction(1'b1, 1'b0, ADDR_RX_DATA, tb_test_data, 1'b0);
   execute_transactions(1);
   // Check the DUT outputs

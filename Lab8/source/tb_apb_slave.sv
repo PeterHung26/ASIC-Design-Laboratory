@@ -53,6 +53,7 @@ integer  tb_test_case_num;
 logic [DATA_MAX_BIT:0] tb_test_data;
 string                 tb_check_tag;
 logic [13:0]           tb_test_bit_period;
+logic [3:0]            tb_test_data_size;
 logic                  tb_mismatch;
 logic                  tb_check;
 
@@ -392,11 +393,116 @@ initial begin
   // Run the read transactions via the model
   execute_transactions(2);
 
-  // Student TODO: Add more test cases here
+  //*****************************************************************************
+  // Test Case: Read from Data Buffer
+  //*****************************************************************************
   // Update Navigation Info
-  tb_test_case     = "Need More Tests!";
+  tb_test_case     = "Read and Write from and to Data Buffer";
   tb_test_case_num = tb_test_case_num + 1;
 
+  // Reset the DUT to isolate from prior to isolate from prior test case
+  reset_dut();
+
+  tb_rx_data        = 8'b00101110;
+  tb_data_ready     = 1'b1;
+  tb_overrun_error  = 1'b0;
+  tb_framing_error  = 1'b0;
+  tb_test_data      = 8'b00101110;
+  enqueue_transaction(1'b1, 1'b0, ADDR_RX_DATA, tb_test_data, 1'b0);
+  execute_transactions(1);
+
+  // Check the DUT outputs
+  tb_expected_data_read  = 1'b1;
+  tb_expected_bit_period = RESET_BIT_PERIOD;
+  tb_expected_data_size  = RESET_DATA_SIZE;
+  check_outputs("after reading from data buffer");
+
+  enqueue_transaction(1'b1, 1'b1, ADDR_RX_DATA, tb_test_data, 1'b1);
+  execute_transactions(1);
+
+  //*****************************************************************************
+  // Test Case: Configure the Data Size Settings
+  //*****************************************************************************
+  // Update Navigation Info
+  tb_test_case     = "Read from Data Size Config Register after setting it";
+  tb_test_case_num = tb_test_case_num + 1;
+
+  // Reset the DUT to isolate from prior to isolate from prior test case
+  reset_dut();
+  
+  // Enque the needed transactions (Overall period of 1000 clocks)
+  tb_test_data_size = 4'd8;
+  // Enqueue the CR Writes
+  enqueue_transaction(1'b1, 1'b1, ADDR_DATA_CR, {4'b0000, tb_test_data_size}, 1'b0);
+  
+  // Run the write transactions via the model
+  execute_transactions(1);
+
+  // Check the DUT outputs
+  tb_expected_data_read  = 1'b0;
+  tb_expected_bit_period = RESET_BIT_PERIOD;
+  tb_expected_data_size  = tb_test_data_size;
+  check_outputs("after reading from data size config register");
+
+  // Enqueue the CR Reads
+  enqueue_transaction(1'b1, 1'b0, ADDR_DATA_CR, {4'b0000, tb_test_data_size}, 1'b0);
+
+  // Run the read transactions via the model
+  execute_transactions(1);
+
+  //*****************************************************************************
+  // Test Case: Configure the Data Ready Settings
+  //*****************************************************************************
+  // Update Navigation Info
+  tb_test_case     = "Read from Data Ready Status Register after setting it";
+  tb_test_case_num = tb_test_case_num + 1;
+
+  // Reset the DUT to isolate from prior to isolate from prior test case
+  reset_dut();
+  
+  tb_rx_data        = 8'b00101110;
+  tb_data_ready     = 1'b1;
+  tb_overrun_error  = 1'b0;
+  tb_framing_error  = 1'b0;
+  tb_test_data      = 8'b00000001;
+  // Enqueue the CR Writes
+  enqueue_transaction(1'b1, 1'b1, ADDR_DATA_SR, tb_test_data, 1'b1);
+  
+  // Run the write transactions via the model
+  execute_transactions(1);
+
+  // Enqueue the CR Reads
+  enqueue_transaction(1'b1, 1'b0, ADDR_DATA_SR, tb_test_data, 1'b0);
+
+  // Run the read transactions via the model
+  execute_transactions(1);
+
+  //*****************************************************************************
+  // Test Case: Configure the Slave Error Settings
+  //*****************************************************************************
+  // Update Navigation Info
+  tb_test_case     = "Read from UART Error Status Register after setting it";
+  tb_test_case_num = tb_test_case_num + 1;
+
+  // Reset the DUT to isolate from prior to isolate from prior test case
+  reset_dut();
+  
+  tb_rx_data        = 8'b00101110;
+  tb_data_ready     = 1'b0;
+  tb_overrun_error  = 1'b1;
+  tb_framing_error  = 1'b0;
+  tb_test_data      = 8'b00000010;
+  // Enqueue the CR Writes
+  enqueue_transaction(1'b1, 1'b1, ADDR_ERROR_SR, tb_test_data, 1'b1);
+  
+  // Run the write transactions via the model
+  execute_transactions(1);
+
+  // Enqueue the CR Reads
+  enqueue_transaction(1'b1, 1'b0, ADDR_ERROR_SR, tb_test_data, 1'b0);
+
+  // Run the read transactions via the model
+  execute_transactions(1);
 end
 
 endmodule
