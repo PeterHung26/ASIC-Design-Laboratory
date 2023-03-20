@@ -75,6 +75,7 @@ logic                  tb_hwrite;
 logic [DATA_MAX_BIT:0] tb_hwdata;
 logic [DATA_MAX_BIT:0] tb_hrdata;
 logic                  tb_hresp;
+logic                  tb_clear_new_coeff;
 
 //*****************************************************************************
 // FIR Filter-side Signals
@@ -160,7 +161,8 @@ ahb_lite_slave DUT (.clk(tb_clk), .n_rst(tb_n_rst),
                     .hwrite(tb_hwrite),
                     .hwdata(tb_hwdata),
                     .hrdata(tb_hrdata),
-                    .hresp(tb_hresp));
+                    .hresp(tb_hresp),
+                    .clear_new_coeff(tb_clear_new_coeff));
 
 //*****************************************************************************
 // DUT Related TB Tasks
@@ -294,7 +296,7 @@ begin
 end
 endtask
 
-// Task to clear/initialize all FIR-side inputs
+// Task to clear/initialize all FIR-side outputs
 task init_fir_side;
 begin
   tb_fir_out   = '0;
@@ -371,10 +373,10 @@ initial begin
   #(CLK_PERIOD * 3);
 
   //*****************************************************************************
-  // Test Case: Set a new sample value
+  // Test Case: Set and Read a new sample value
   //*****************************************************************************
   // Update Navigation Info
-  tb_test_case     = "Send Sample";
+  tb_test_case     = "Send  and Read Sample";
   tb_test_case_num = tb_test_case_num + 1;
   init_fir_side();
   init_expected_outs();
@@ -399,6 +401,10 @@ initial begin
   // Give some visual spacing between check and next test case start
   #(CLK_PERIOD * 3);
 
+  enqueue_transaction(1'b1, 1'b0, ADDR_SAMPLE, tb_test_data, 1'b0, 1'b1);
+
+  // Run the transactions via the model
+  execute_transactions(1);
 
   //*****************************************************************************
   // Test Case: Configure and check a Coefficient Value
@@ -423,19 +429,23 @@ initial begin
   execute_transactions(2);
 
   // Check the DUT outputs
+  tb_coeff_num              = 2'd3;
   tb_expected_data_ready    = 1'b0;
   tb_expected_sample        = RESET_SAMPLE;
   tb_expected_new_coeff_set = 1'b0;
-  tb_expected_coeff         = RESET_COEFF;
+  tb_expected_coeff         = tb_test_data;
+  #(CLK_PERIOD);
   check_outputs("after attempting to configure F3");
 
   // Give some visual spacing between check and next test case start
   #(CLK_PERIOD * 3);
 
 
-  // Student TODO: Add more test cases here
+  //*****************************************************************************
+  // Test Case: Configure and check Status Register
+  //*****************************************************************************
   // Update Navigation Info
-  tb_test_case     = "Need More Tests!";
+  tb_test_case     = "Configure and check Status Register";
   tb_test_case_num = tb_test_case_num + 1;
   init_fir_side();
   init_expected_outs();
@@ -443,6 +453,37 @@ initial begin
   // Reset the DUT to isolate from prior test case
   reset_dut();
 
+  tb_modwait   = 1'b1;
+  tb_err       = 1'b1;
+  // Enqueue the needed transactions (Low Coeff Address => F0, just add 2 x index)
+  tb_test_data = 16'h0101; 
+  enqueue_transaction(1'b1, 1'b1, ADDR_STATUS, tb_test_data, 1'b1, 1'b1);
+  enqueue_transaction(1'b1, 1'b0, ADDR_STATUS, tb_test_data, 1'b0, 1'b1);
+
+  // Run the transactions via the model
+  execute_transactions(2);
+
+
+  //*****************************************************************************
+  // Test Case: Configure and check Result Register
+  //*****************************************************************************
+  // Update Navigation Info
+  tb_test_case     = "Configure and check Result Register";
+  tb_test_case_num = tb_test_case_num + 1;
+  init_fir_side();
+  init_expected_outs();
+
+  // Reset the DUT to isolate from prior test case
+  reset_dut();
+
+  tb_fir_out   = 16'hABCD;
+  // Enqueue the needed transactions (Low Coeff Address => F0, just add 2 x index)
+  tb_test_data = tb_fir_out; 
+  enqueue_transaction(1'b1, 1'b1, ADDR_RESULT, tb_test_data, 1'b1, 1'b1);
+  enqueue_transaction(1'b1, 1'b0, ADDR_RESULT, tb_test_data, 1'b0, 1'b1);
+
+  // Run the transactions via the model
+  execute_transactions(2);
 end
 
 endmodule

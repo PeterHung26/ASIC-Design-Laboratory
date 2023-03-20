@@ -18,8 +18,6 @@ module fir_filter (
     output reg [15:0] fir_out,
     output reg err
 );
-reg dr;
-reg lc;
 reg overflow;
 reg cnt_up;
 reg clear;
@@ -29,23 +27,11 @@ reg [3:0] src2;
 reg [3:0] dest;
 reg [16:0] outreg_data;
 
-sync_low DATA_READY(
-    .clk(clk),
-    .n_rst(n_reset),
-    .async_in(data_ready),
-    .sync_out(dr)
-);
-sync_low LOAD_COEFF(
-    .clk(clk),
-    .n_rst(n_reset),
-    .async_in(load_coeff),
-    .sync_out(lc)
-);
 controller CONTROL(
     .clk(clk),
     .n_rst(n_reset),
-    .dr(dr),
-    .lc(lc),
+    .dr(data_ready),
+    .lc(load_coeff),
     .overflow(overflow),
     .cnt_up(cnt_up),
     .clear(clear),
