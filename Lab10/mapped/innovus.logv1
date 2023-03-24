@@ -1,0 +1,40 @@
+[03/23 21:36:43      0s] 
+[03/23 21:36:43      0s] Cadence Innovus(TM) Implementation System.
+[03/23 21:36:43      0s] Copyright 2016 Cadence Design Systems, Inc. All rights reserved worldwide.
+[03/23 21:36:43      0s] 
+[03/23 21:36:43      0s] Version:	v16.12-s051_1, built Wed Aug 17 12:18:54 PDT 2016
+[03/23 21:36:43      0s] Options:	
+[03/23 21:36:43      0s] Date:		Thu Mar 23 21:36:43 2023
+[03/23 21:36:43      0s] Host:		ececomp4.ecn.purdue.edu (x86_64 w/Linux 3.10.0-1160.88.1.el7.x86_64) (32cores*128cpus*AMD EPYC 7513 32-Core Processor 512KB)
+[03/23 21:36:43      0s] OS:		CentOS Linux release 7.9.2009 (Core)
+[03/23 21:36:43      0s] 
+[03/23 21:36:43      0s] License:
+[03/23 21:36:43      0s] 		invs	Innovus Implementation System	16.1	checkout succeeded
+[03/23 21:36:43      0s] 		8 CPU jobs allowed with the current license(s). Use setMultiCpuUsage to set your required CPU count.
+[03/23 21:36:49      5s] @(#)CDS: Innovus v16.12-s051_1 (64bit) 08/17/2016 12:18 (Linux 2.6.18-194.el5)
+[03/23 21:36:49      5s] @(#)CDS: NanoRoute 16.12-s051_1 NR160816-1350/16_12-UB (database version 2.30, 347.6.1) {superthreading v1.30}
+[03/23 21:36:49      5s] @(#)CDS: AAE 16.12-s026 (64bit) 08/17/2016 (Linux 2.6.18-194.el5)
+[03/23 21:36:49      5s] @(#)CDS: CTE 16.12-s023_1 () Aug 12 2016 01:35:46 ( )
+[03/23 21:36:49      5s] @(#)CDS: SYNTECH 16.12-s009_1 () Aug 11 2016 01:33:09 ( )
+[03/23 21:36:49      5s] @(#)CDS: CPE v16.12-s054
+[03/23 21:36:49      5s] @(#)CDS: IQRC/TQRC 15.2.4-s467 (64bit) Wed Jul 20 17:12:38 PDT 2016 (Linux 2.6.18-194.el5)
+[03/23 21:36:49      5s] @(#)CDS: OA 22.50-p049 Fri Jun 10 10:56:20 2016
+[03/23 21:36:49      5s] @(#)CDS: SGN 10.10-p124 (19-Aug-2014) (64 bit executable)
+[03/23 21:36:49      5s] @(#)CDS: RCDB 11.8
+[03/23 21:36:49      5s] --- Running on ececomp4.ecn.purdue.edu (x86_64 w/Linux 3.10.0-1160.88.1.el7.x86_64) (32cores*128cpus*AMD EPYC 7513 32-Core Processor 512KB) ---
+[03/23 21:36:49      5s] Create and set the environment variable TMPDIR to /tmp/innovus_temp_50701_ececomp4.ecn.purdue.edu_mg173_m7h7F2.
+
+[03/23 21:36:49      5s] 
+[03/23 21:36:49      5s] **INFO:  MMMC transition support version v31-84 
+[03/23 21:36:49      5s] 
+[03/23 21:36:49      5s] <CMD> set_global _enable_mmmc_by_default_flow      $CTE::mmmc_default
+[03/23 21:36:49      5s] <CMD> suppressMessage ENCEXT-2799
+[03/23 21:36:49      5s] <CMD> getDrawView
+[03/23 21:36:49      5s] <CMD> loadWorkspace -name Physical
+[03/23 21:36:50      5s] <CMD> win
+[03/23 21:37:05      6s] couldn't read file "full_run.tcl": no such file or directory
+[03/23 21:37:17      6s] 
+[03/23 21:37:17      6s] *** Memory Usage v#1 (Current mem = 486.312M, initial mem = 163.832M) ***
+[03/23 21:37:17      6s] *** Message Summary: 0 warning(s), 0 error(s)
+[03/23 21:37:17      6s] 
+[03/23 21:37:17      6s] --- Ending "Innovus" (totcpu=0:00:06.4, real=0:00:34.0, mem=486.3M) ---
