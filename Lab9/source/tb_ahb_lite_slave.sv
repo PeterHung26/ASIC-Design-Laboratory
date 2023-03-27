@@ -484,6 +484,37 @@ initial begin
 
   // Run the transactions via the model
   execute_transactions(2);
+
+  //*****************************************************************************
+  // Test Case: Configure and check new_coefficient_set
+  //*****************************************************************************
+  // Update Navigation Info
+  tb_test_case     = "Configure and check new_coefficient_set";
+  tb_test_case_num = tb_test_case_num + 1;
+  init_fir_side();
+  init_expected_outs();
+
+  // Reset the DUT to isolate from prior test case
+  reset_dut();
+
+  // Enqueue the needed transactions (Low Coeff Address => F0, just add 2 x index)
+  tb_test_data = 16'b1; 
+  enqueue_transaction(1'b1, 1'b1, ADDR_COEF_SET, tb_test_data, 1'b0, 1'b0);
+  enqueue_transaction(1'b1, 1'b0, ADDR_COEF_SET, tb_test_data, 1'b0, 1'b0);
+
+  // Run the transactions via the model
+  execute_transactions(2);
+
+  tb_expected_data_ready    = 1'b0;
+  tb_expected_sample        = RESET_SAMPLE;
+  tb_expected_new_coeff_set = 1'b1;
+  tb_expected_coeff         = RESET_COEFF;
+  #(CLK_PERIOD);
+  check_outputs("after attempting to configure F3");
+
+  // Give some visual spacing between check and next test case start
+  #(CLK_PERIOD * 3);
+
 end
 
 endmodule

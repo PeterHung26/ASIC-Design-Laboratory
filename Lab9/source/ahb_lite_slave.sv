@@ -124,10 +124,7 @@ always_comb begin : READ_AND_WRITE_SELECT
                         next_size = hsize;
                     end
                     4'hE: begin
-                        if(hsize == 0)
-                            next_write_select = haddr;
-                        else
-                            hresp = 1'b1;
+                        next_write_select = haddr;
                     end
                     default: begin
                         hresp = 1'b1;
@@ -138,15 +135,15 @@ always_comb begin : READ_AND_WRITE_SELECT
                 case (haddr)
                     4'd0: begin
                         if(hsize == 1'b0)
-                            next_hrdata = {15'b0, modwait};
+                            next_hrdata = {15'b0, modwait | new_coefficient_set};
                         else
-                            next_hrdata = {7'b0, err, 7'b0, modwait};
+                            next_hrdata = {7'b0, err, 7'b0, modwait | new_coefficient_set};
                     end
                     4'd1: begin
                         if(hsize == 1'b0)
-                            next_hrdata = {7'b0, err, 8'b0};
+                            next_hrdata = {15'b0, err};
                         else
-                            next_hrdata = {7'b0000000, err, 7'b0000000, modwait};
+                            next_hrdata = {7'b0000000, err, 7'b0000000, modwait | new_coefficient_set};
                     end 
                     4'd2: begin
                         if(hsize == 1'b0)
@@ -156,163 +153,75 @@ always_comb begin : READ_AND_WRITE_SELECT
                     end
                     4'd3: begin
                         if(hsize == 1'b0)
-                            next_hrdata = {fir_out[15:8],8'b0};
+                            next_hrdata = {8'b0, fir_out[15:8]};
                         else
                             next_hrdata = fir_out;
                     end
                     4'd4: begin
-                        if(write_select == 4'h4) begin
-                            if(hsize == 1'b0)
-                                next_hrdata = {8'b0, hwdata[7:0]};
-                            else
-                                next_hrdata = hwdata;
-                        end
-                        else begin
-                            if(hsize == 1'b0)
-                                next_hrdata = {8'b0, sample_data[7:0]};
-                            else
-                                next_hrdata = sample_data; 
-                        end
+                        if(hsize == 1'b0)
+                            next_hrdata = {8'b0, next_sample_data[7:0]};
+                        else
+                            next_hrdata = next_sample_data;
                     end
                     4'd5: begin
-                        if(write_select == 4'h5) begin
-                            if(hsize == 1'b0)
-                                next_hrdata = {hwdata[15:8],8'b0};
-                            else
-                                next_hrdata = hwdata; 
-                        end
-                        else begin
-                            if(hsize == 1'b0)
-                                next_hrdata = {sample_data[15:8],8'b0};
-                            else
-                                next_hrdata = sample_data; 
-                        end
+                        if(hsize == 1'b0)
+                            next_hrdata = {8'b0, next_sample_data[15:8]};
+                        else
+                            next_hrdata = next_sample_data; 
                     end
                     4'd6: begin
-                        if(write_select == 4'h6) begin
-                            if(hsize == 1'b0)
-                                next_hrdata = {8'b0, hwdata[7:0]};
-                            else
-                                next_hrdata = hwdata; 
-                        end
-                        else begin
-                            if(hsize == 1'b0)
-                                next_hrdata = {8'b0, f0[7:0]};
-                            else
-                                next_hrdata = f0; 
-                        end
+                        if(hsize == 1'b0)
+                            next_hrdata = {8'b0, next_f0[7:0]};
+                        else
+                            next_hrdata = next_f0;
                     end
                     4'd7: begin
-                        if(write_select == 4'h7) begin
-                            if(hsize == 1'b0)
-                                next_hrdata = {hwdata[15:8], 8'b0};
-                            else
-                                next_hrdata = hwdata; 
-                        end
-                        else begin
-                            if(hsize == 1'b0)
-                                next_hrdata = {f0[15:8], 8'b0};
-                            else
-                                next_hrdata = f0; 
-                        end
+                        if(hsize == 1'b0)
+                            next_hrdata = {8'b0, next_f0[15:8]};
+                        else
+                            next_hrdata = next_f0; 
                     end
                     4'd8: begin
-                        if(write_select == 4'h8) begin
-                            if(hsize == 1'b0)
-                                next_hrdata = {8'b0, hwdata[7:0]};
-                            else
-                                next_hrdata = hwdata; 
-                        end
-                        else begin
-                            if(hsize == 1'b0)
-                                next_hrdata = {8'b0, f1[7:0]};
-                            else
-                                next_hrdata = f1; 
-                        end
+                        if(hsize == 1'b0)
+                            next_hrdata = {8'b0, next_f1[7:0]};
+                        else
+                            next_hrdata = next_f1; 
                     end
                     4'd9: begin
-                        if(write_select == 4'h9) begin
-                            if(hsize == 1'b0)
-                                next_hrdata = {hwdata[15:8], 8'b0};
-                            else
-                                next_hrdata = hwdata; 
-                        end
-                        else begin
-                            if(hsize == 1'b0)
-                                next_hrdata = {f1[15:8], 8'b0};
-                            else
-                                next_hrdata = f1; 
-                        end
+                        if(hsize == 1'b0)
+                            next_hrdata = {8'b0, next_f1[15:8]};
+                        else
+                            next_hrdata = next_f1; 
                     end
                     4'hA: begin
-                        if(write_select == 4'hA) begin
-                            if(hsize == 1'b0)
-                                next_hrdata = {8'b0, hwdata[7:0]};
-                            else
-                                next_hrdata = hwdata; 
-                        end
-                        else begin
-                            if(hsize == 1'b0)
-                                next_hrdata = {8'b0, f2[7:0]};
-                            else
-                                next_hrdata = f2; 
-                        end
+                        if(hsize == 1'b0)
+                            next_hrdata = {8'b0, next_f2[7:0]};
+                        else
+                            next_hrdata = next_f2; 
                     end
                     4'hB: begin
-                        if(write_select == 4'hB) begin
                             if(hsize == 1'b0)
-                                next_hrdata = {hwdata[15:8], 8'b0};
+                                next_hrdata = {8'b0, next_f2[15:8]};
                             else
-                                next_hrdata = hwdata; 
-                        end
-                        else begin
-                            if(hsize == 1'b0)
-                                next_hrdata = {f2[15:8], 8'b0};
-                            else
-                                next_hrdata = f2; 
-                        end
+                                next_hrdata = next_f2; 
                     end
                     4'hC: begin
-                        if(write_select == 4'hC) begin
-                            if(hsize == 1'b0)
-                                next_hrdata = {8'b0, hwdata[7:0]};
-                            else
-                                next_hrdata = hwdata; 
-                        end
-                        else begin
-                            if(hsize == 1'b0)
-                                next_hrdata = {8'b0, f3[7:0]};
-                            else
-                                next_hrdata = f3; 
-                        end
+                        if(hsize == 1'b0)
+                            next_hrdata = {8'b0, next_f3[7:0]};
+                        else
+                            next_hrdata = next_f3; 
                     end
                     4'hD: begin
-                        if(write_select == 4'hD) begin
-                            if(hsize == 1'b0)
-                                next_hrdata = {hwdata[15:8], 8'b0};
-                            else
-                                next_hrdata = hwdata; 
-                        end
-                        else begin
-                            if(hsize == 1'b0)
-                                next_hrdata = {f3[15:8], 8'b0};
-                            else
-                                next_hrdata = f3; 
-                        end
+                        if(hsize == 1'b0)
+                            next_hrdata = {8'b0, next_f3[15:8]};
+                        else
+                            next_hrdata = next_f3; 
                     end
                     4'hE: begin
-                        if(write_select == 4'hE) begin
-                            if(hsize == 1'b0)
-                                next_hrdata = {15'b0, hwdata[0]};
-                            else
-                                hresp = 1'b1;
-                        end
-                        else begin
-                            if(hsize == 1'b0)
-                                next_hrdata = {15'b0, new_coefficient_set};
-                            else
-                                hresp = 1'b1;
-                        end
+                        if(hsize == 1'b0)
+                            next_hrdata = {15'b0, next_new_coefficient_set};
+                        else
+                            hresp = 1'b1;
                     end
                     default: begin
                         hresp = 1'b1;
@@ -366,7 +275,7 @@ always_comb begin : WRITE
         end
         4'h5: begin
             if(size == 1'b0)
-                next_sample_data = {hwdata[15:8],sample_data[7:0]};
+                next_sample_data = {hwdata[7:0],sample_data[7:0]};
             else
                 next_sample_data = hwdata;
             if(!modwait)
@@ -382,7 +291,7 @@ always_comb begin : WRITE
         end
         4'h7: begin
             if(size == 1'b0)
-                next_f0 = {hwdata[15:8],f0[7:0]};
+                next_f0 = {hwdata[7:0],f0[7:0]};
             else
                 next_f0 = hwdata;
         end
@@ -394,7 +303,7 @@ always_comb begin : WRITE
         end
         4'h9: begin
             if(size == 1'b0)
-                next_f1 = {hwdata[15:8],f1[7:0]};
+                next_f1 = {hwdata[7:0],f1[7:0]};
             else
                 next_f1 = hwdata;
         end
@@ -406,7 +315,7 @@ always_comb begin : WRITE
         end
         4'hB: begin
             if(size == 1'b0)
-                next_f2 = {hwdata[15:8],f2[7:0]};
+                next_f2 = {hwdata[7:0],f2[7:0]};
             else
                 next_f2 = hwdata;
         end
@@ -418,7 +327,7 @@ always_comb begin : WRITE
         end
         4'hD: begin
             if(size == 1'b0)
-                next_f3 = {hwdata[15:8],f3[7:0]};
+                next_f3 = {hwdata[7:0],f3[7:0]};
             else
                 next_f3 = hwdata;
         end

@@ -73,5 +73,5 @@ fir_filter FIR_FILTER(
     .modwait(modwait),
     .fir_out(fir_out),
     .err(err)
-)
+);
 endmodule
