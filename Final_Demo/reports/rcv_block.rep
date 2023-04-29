@@ -1,0 +1,124 @@
+Information: Updating design information... (UID-85)
+ 
+****************************************
+Report : timing
+        -path full
+        -delay max
+        -max_paths 1
+Design : rcv_block
+Version: K-2015.06-SP1
+Date   : Fri Apr 28 12:52:48 2023
+****************************************
+
+Operating Conditions: typical   Library: osu05_stdcells
+Wire Load Model Mode: top
+
+  Startpoint: RCU/state_reg[4]
+              (rising edge-triggered flip-flop)
+  Endpoint: flush (output port)
+  Path Group: (none)
+  Path Type: max
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  RCU/state_reg[4]/CLK (DFFSR)             0.00       0.00 r
+  RCU/state_reg[4]/Q (DFFSR)               0.74       0.74 r
+  RCU/U147/Y (INVX1)                       0.82       1.56 f
+  RCU/U146/Y (NAND3X1)                     0.53       2.09 r
+  RCU/U143/Y (NOR2X1)                      0.46       2.54 f
+  RCU/flush (rcu)                          0.00       2.54 f
+  flush (out)                              0.00       2.54 f
+  data arrival time                                   2.54
+  -----------------------------------------------------------
+  (Path is unconstrained)
+
+
+1
+ 
+****************************************
+Report : area
+Design : rcv_block
+Version: K-2015.06-SP1
+Date   : Fri Apr 28 12:52:48 2023
+****************************************
+
+Library(s) Used:
+
+    osu05_stdcells (File: /package/eda/cells/OSU/v2.7/synopsys/lib/ami05/osu05_stdcells.db)
+
+Number of ports:                          233
+Number of nets:                           836
+Number of cells:                          645
+Number of combinational cells:            479
+Number of sequential cells:               149
+Number of macros/black boxes:               0
+Number of buf/inv:                        135
+Number of references:                      13
+
+Combinational area:             115587.000000
+Buf/Inv area:                    19440.000000
+Noncombinational area:          117216.000000
+Macro/Black Box area:                0.000000
+Net Interconnect area:      undefined  (No wire load specified)
+
+Total cell area:                232803.000000
+Total area:                 undefined
+1
+Loading db file '/package/eda/cells/OSU/v2.7/synopsys/lib/ami05/osu05_stdcells.db'
+Information: Propagating switching activity (low effort zero delay simulation). (PWR-6)
+Warning: There is no defined clock in the design. (PWR-80)
+Warning: Design has unannotated primary inputs. (PWR-414)
+Warning: Design has unannotated sequential cell outputs. (PWR-415)
+ 
+****************************************
+Report : power
+        -hier
+        -analysis_effort low
+Design : rcv_block
+Version: K-2015.06-SP1
+Date   : Fri Apr 28 12:52:48 2023
+****************************************
+
+
+Library(s) Used:
+
+    osu05_stdcells (File: /package/eda/cells/OSU/v2.7/synopsys/lib/ami05/osu05_stdcells.db)
+
+
+Operating Conditions: typical   Library: osu05_stdcells
+Wire Load Model Mode: top
+
+
+Global Operating Voltage = 5    
+Power-specific unit information :
+    Voltage Units = 1V
+    Capacitance Units = 1.000000pf
+    Time Units = 1ns
+    Dynamic Power Units = 1mW    (derived from V,C,T units)
+    Leakage Power Units = 1nW
+
+
+--------------------------------------------------------------------------------
+                                       Switch   Int      Leak     Total
+Hierarchy                              Power    Power    Power    Power    %
+--------------------------------------------------------------------------------
+rcv_block                                 0.991    9.478   71.679   10.469 100.0
+  COUNT_TO_64 (count_to_64)            3.56e-03    0.717    6.889    0.721   6.9
+    add_21 (count_to_64_DW01_inc_0)       0.000    0.000    1.541 1.54e-06   0.0
+  COUNT_TO_2 (count_to_2)                 0.000    0.205    1.696    0.205   2.0
+  STORE_2_BYTE (store_2_byte_buffer)   9.16e-03    2.458   16.218    2.467  23.6
+  PACKET (rx_packet)                   2.28e-03    0.411    4.786    0.413   3.9
+  READY (rx_data_ready)                   0.128    0.301    1.212    0.429   4.1
+  SHIFT_REGISTER (stp_sr_8_lsb)        1.21e-02    1.044    5.550    1.056  10.1
+    CORE (flex_stp_sr_NUM_BITS8_SHIFT_MSB0)
+                                       1.21e-02    1.044    5.550    1.056  10.1
+  RCU (rcu)                            5.49e-02    0.577   13.283    0.632   6.0
+  TIMER (timer)                           0.754    2.366   16.888    3.120  29.8
+    CORE2 (flex_counter_0)             4.46e-03    0.515    5.885    0.519   5.0
+    CORE1 (flex_counter_1)                0.453    1.109    5.885    1.562  14.9
+  EDGE_DETECTOR (edge_detector)        3.86e-03    0.147    0.713    0.151   1.4
+  DECODER (decoder)                    1.86e-03    0.261    1.567    0.263   2.5
+  EOP_DETECTOR (eop_detect)            1.28e-03    0.105    0.745    0.106   1.0
+  SYNC_LOW (sync_low)                  6.33e-03    0.417    1.066    0.424   4.0
+  SYNC_HIGH (sync_high)                1.36e-02    0.469    1.066    0.483   4.6
+1

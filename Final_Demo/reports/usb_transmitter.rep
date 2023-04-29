@@ -1,0 +1,126 @@
+Information: Updating design information... (UID-85)
+ 
+****************************************
+Report : timing
+        -path full
+        -delay max
+        -max_paths 1
+Design : usb_transmitter
+Version: K-2015.06-SP1
+Date   : Fri Apr 28 12:42:59 2023
+****************************************
+
+Operating Conditions: typical   Library: osu05_stdcells
+Wire Load Model Mode: top
+
+  Startpoint: tmu/state_reg[0]
+              (rising edge-triggered flip-flop)
+  Endpoint: tx_transfer_active
+            (output port)
+  Path Group: (none)
+  Path Type: max
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  tmu/state_reg[0]/CLK (DFFSR)             0.00       0.00 r
+  tmu/state_reg[0]/Q (DFFSR)               0.71       0.71 f
+  tmu/U83/Y (INVX1)                        0.45       1.16 r
+  tmu/U82/Y (NOR2X1)                       0.45       1.61 f
+  tmu/U68/Y (NAND3X1)                      0.26       1.88 r
+  tmu/U67/Y (AND2X1)                       0.18       2.05 r
+  tmu/U66/Y (NAND3X1)                      0.07       2.13 f
+  tmu/U65/Y (NOR2X1)                       0.17       2.29 r
+  tmu/U64/Y (NAND3X1)                      0.12       2.41 f
+  tmu/tx_transfer_active (tmu)             0.00       2.41 f
+  tx_transfer_active (out)                 0.00       2.41 f
+  data arrival time                                   2.41
+  -----------------------------------------------------------
+  (Path is unconstrained)
+
+
+1
+ 
+****************************************
+Report : area
+Design : usb_transmitter
+Version: K-2015.06-SP1
+Date   : Fri Apr 28 12:42:59 2023
+****************************************
+
+Library(s) Used:
+
+    osu05_stdcells (File: /package/eda/cells/OSU/v2.7/synopsys/lib/ami05/osu05_stdcells.db)
+
+Number of ports:                          165
+Number of nets:                           520
+Number of cells:                          383
+Number of combinational cells:            300
+Number of sequential cells:                72
+Number of macros/black boxes:               0
+Number of buf/inv:                         69
+Number of references:                       7
+
+Combinational area:              76455.000000
+Buf/Inv area:                     9936.000000
+Noncombinational area:           49104.000000
+Macro/Black Box area:                0.000000
+Net Interconnect area:      undefined  (No wire load specified)
+
+Total cell area:                125559.000000
+Total area:                 undefined
+1
+Loading db file '/package/eda/cells/OSU/v2.7/synopsys/lib/ami05/osu05_stdcells.db'
+Information: Propagating switching activity (low effort zero delay simulation). (PWR-6)
+Warning: There is no defined clock in the design. (PWR-80)
+Warning: Design has unannotated primary inputs. (PWR-414)
+Warning: Design has unannotated sequential cell outputs. (PWR-415)
+ 
+****************************************
+Report : power
+        -hier
+        -analysis_effort low
+Design : usb_transmitter
+Version: K-2015.06-SP1
+Date   : Fri Apr 28 12:42:59 2023
+****************************************
+
+
+Library(s) Used:
+
+    osu05_stdcells (File: /package/eda/cells/OSU/v2.7/synopsys/lib/ami05/osu05_stdcells.db)
+
+
+Operating Conditions: typical   Library: osu05_stdcells
+Wire Load Model Mode: top
+
+
+Global Operating Voltage = 5    
+Power-specific unit information :
+    Voltage Units = 1V
+    Capacitance Units = 1.000000pf
+    Time Units = 1ns
+    Dynamic Power Units = 1mW    (derived from V,C,T units)
+    Leakage Power Units = 1nW
+
+
+--------------------------------------------------------------------------------
+                                       Switch   Int      Leak     Total
+Hierarchy                              Power    Power    Power    Power    %
+--------------------------------------------------------------------------------
+usb_transmitter                           4.070    8.602   39.967   12.672 100.0
+  tmu (tmu)                               1.179    1.551    7.165    2.730  21.5
+  timer (timer_transmit)                  0.716    2.440   21.833    3.156  24.9
+    bit_counter_byte_9 (flex_counter_NUM_CNT_BITS4_0)
+                                       9.60e-02    0.553    6.111    0.650   5.1
+    bit_counter_byte_8 (flex_counter_NUM_CNT_BITS4_1)
+                                       9.60e-02    0.553    6.111    0.650   5.1
+    bit_counter_bit (flex_counter_NUM_CNT_BITS4_2)
+                                          0.299    0.829    6.111    1.128   8.9
+  d_minus_selecter (d_minus_selecter)  1.26e-02 2.21e-02    0.157 3.47e-02   0.3
+  d_plus_selecter (d_plus_selecter)    6.33e-05 1.84e-04    0.102 2.48e-04   0.0
+  encoder (encoder)                    7.56e-04    0.130    0.795    0.131   1.0
+  pts_sr_8_lsb (pts_sr_8_lsb)             0.719    2.179    6.060    2.898  22.9
+    CORE (flex_pts_sr_NUM_BITS8_SHIFT_MSB0)
+                                          0.719    2.179    6.060    2.898  22.9
+  packet_selecter (packet_selecter)       1.442    2.279    3.855    3.722  29.4
+1

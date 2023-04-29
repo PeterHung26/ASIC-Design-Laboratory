@@ -1,0 +1,170 @@
+Information: Updating design information... (UID-85)
+ 
+****************************************
+Report : timing
+        -path full
+        -delay max
+        -max_paths 1
+Design : usb_top_level
+Version: K-2015.06-SP1
+Date   : Fri Apr 28 13:25:59 2023
+****************************************
+
+Operating Conditions: typical   Library: osu05_stdcells
+Wire Load Model Mode: top
+
+  Startpoint: BUFFER/store_ptr_controller/store_ptr_reg[0]
+              (rising edge-triggered flip-flop)
+  Endpoint: buffer_occupancy[6]
+            (output port)
+  Path Group: (none)
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  BUFFER/store_ptr_controller/store_ptr_reg[0]/CLK (DFFSR)
+                                                          0.00       0.00 r
+  BUFFER/store_ptr_controller/store_ptr_reg[0]/Q (DFFSR)
+                                                          1.00       1.00 f
+  BUFFER/store_ptr_controller/store_ptr[0] (store_ptr_controller)
+                                                          0.00       1.00 f
+  BUFFER/fifo_ram/store_ptr[0] (fifo_ram)                 0.00       1.00 f
+  BUFFER/fifo_ram/sub_60/A[0] (fifo_ram_DW01_sub_0)       0.00       1.00 f
+  BUFFER/fifo_ram/sub_60/U1/Y (OR2X1)                     0.36       1.36 f
+  BUFFER/fifo_ram/sub_60/U2_1/YC (FAX1)                   0.45       1.81 f
+  BUFFER/fifo_ram/sub_60/U2_2/YC (FAX1)                   0.46       2.27 f
+  BUFFER/fifo_ram/sub_60/U2_3/YC (FAX1)                   0.46       2.73 f
+  BUFFER/fifo_ram/sub_60/U2_4/YC (FAX1)                   0.46       3.18 f
+  BUFFER/fifo_ram/sub_60/U2_5/YS (FAX1)                   0.67       3.85 r
+  BUFFER/fifo_ram/sub_60/DIFF[5] (fifo_ram_DW01_sub_0)
+                                                          0.00       3.85 r
+  BUFFER/fifo_ram/U2274/Y (NOR2X1)                        0.25       4.10 f
+  BUFFER/fifo_ram/U2273/Y (NAND3X1)                       0.15       4.26 r
+  BUFFER/fifo_ram/U2269/Y (NOR2X1)                        0.40       4.65 f
+  BUFFER/fifo_ram/buffer_occupancy[6] (fifo_ram)          0.00       4.65 f
+  BUFFER/buffer_occupancy[6] (buffer)                     0.00       4.65 f
+  buffer_occupancy[6] (out)                               0.00       4.65 f
+  data arrival time                                                  4.65
+  --------------------------------------------------------------------------
+  (Path is unconstrained)
+
+
+1
+ 
+****************************************
+Report : area
+Design : usb_top_level
+Version: K-2015.06-SP1
+Date   : Fri Apr 28 13:25:59 2023
+****************************************
+
+Library(s) Used:
+
+    osu05_stdcells (File: /package/eda/cells/OSU/v2.7/synopsys/lib/ami05/osu05_stdcells.db)
+
+Number of ports:                          805
+Number of nets:                          5754
+Number of cells:                         5051
+Number of combinational cells:           3481
+Number of sequential cells:              1532
+Number of macros/black boxes:               0
+Number of buf/inv:                        966
+Number of references:                       4
+
+Combinational area:             939816.000000
+Buf/Inv area:                   142776.000000
+Noncombinational area:         1210176.000000
+Macro/Black Box area:                0.000000
+Net Interconnect area:      undefined  (No wire load specified)
+
+Total cell area:               2149992.000000
+Total area:                 undefined
+1
+Loading db file '/package/eda/cells/OSU/v2.7/synopsys/lib/ami05/osu05_stdcells.db'
+Information: Propagating switching activity (low effort zero delay simulation). (PWR-6)
+Warning: There is no defined clock in the design. (PWR-80)
+Warning: Design has unannotated primary inputs. (PWR-414)
+Warning: Design has unannotated sequential cell outputs. (PWR-415)
+ 
+****************************************
+Report : power
+        -hier
+        -analysis_effort low
+Design : usb_top_level
+Version: K-2015.06-SP1
+Date   : Fri Apr 28 13:26:00 2023
+****************************************
+
+
+Library(s) Used:
+
+    osu05_stdcells (File: /package/eda/cells/OSU/v2.7/synopsys/lib/ami05/osu05_stdcells.db)
+
+
+Operating Conditions: typical   Library: osu05_stdcells
+Wire Load Model Mode: top
+
+
+Global Operating Voltage = 5    
+Power-specific unit information :
+    Voltage Units = 1V
+    Capacitance Units = 1.000000pf
+    Time Units = 1ns
+    Dynamic Power Units = 1mW    (derived from V,C,T units)
+    Leakage Power Units = 1nW
+
+
+--------------------------------------------------------------------------------
+                                       Switch   Int      Leak     Total
+Hierarchy                              Power    Power    Power    Power    %
+--------------------------------------------------------------------------------
+usb_top_level                            18.575   96.568  668.691  115.144 100.0
+  RECEIVER (rcv_block)                    0.839    9.248   72.256   10.087   8.8
+    COUNT_TO_64 (count_to_64)          3.56e-03    0.717    6.889    0.721   0.6
+      add_21 (count_to_64_DW01_inc_0)     0.000    0.000    1.541 1.54e-06   0.0
+    COUNT_TO_2 (count_to_2)               0.000    0.205    1.696    0.205   0.2
+    STORE_2_BYTE (store_2_byte_buffer) 9.16e-03    2.458   16.218    2.467   2.1
+    PACKET (rx_packet)                 2.18e-03    0.414    5.364    0.416   0.4
+    READY (rx_data_ready)                 0.000    0.102    1.212    0.102   0.1
+    SHIFT_REGISTER (stp_sr_8_lsb)      1.44e-02    1.045    5.550    1.060   0.9
+      CORE (flex_stp_sr_NUM_BITS8_SHIFT_MSB0)
+                                       1.44e-02    1.045    5.550    1.060   0.9
+    RCU (rcu)                          5.17e-02    0.574   13.283    0.625   0.5
+    TIMER (timer)                         0.732    2.344   16.888    3.075   2.7
+      CORE2 (flex_counter_rx_0)        4.34e-03    0.515    5.885    0.519   0.5
+      CORE1 (flex_counter_rx_1)           0.442    1.096    5.885    1.538   1.3
+    EDGE_DETECTOR (edge_detector)      3.83e-03    0.147    0.713    0.151   0.1
+    DECODER (decoder)                  1.73e-03    0.261    1.567    0.262   0.2
+    EOP_DETECTOR (eop_detect)          1.18e-03    0.104    0.745    0.106   0.1
+    SYNC_LOW (sync_low)                5.97e-03    0.414    1.066    0.420   0.4
+    SYNC_HIGH (sync_high)              1.34e-02    0.464    1.066    0.478   0.4
+  TRANSMITTER (usb_transmitter)           0.228    3.701   40.707    3.929   3.4
+    tmu (tmu)                             0.000    0.512    8.907    0.512   0.4
+    timer (timer_transmit)                0.222    2.016   21.833    2.238   1.9
+      bit_counter_byte_9 (flex_counter_NUM_CNT_BITS4_0)
+                                          0.000    0.512    6.111    0.512   0.4
+      bit_counter_byte_8 (flex_counter_NUM_CNT_BITS4_1)
+                                          0.000    0.512    6.111    0.512   0.4
+      bit_counter_bit (flex_counter_NUM_CNT_BITS4_2)
+                                       2.59e-02    0.521    6.111    0.547   0.5
+    d_minus_selecter (d_minus_selecter)
+                                          0.000    0.000    0.157 1.57e-07   0.0
+    d_plus_selecter (d_plus_selecter)     0.000    0.000    0.102 1.02e-07   0.0
+    encoder (encoder)                  7.56e-04    0.130    0.795    0.131   0.1
+    pts_sr_8_lsb (pts_sr_8_lsb)        5.23e-03    1.043    6.060    1.048   0.9
+      CORE (flex_pts_sr_NUM_BITS8_SHIFT_MSB0)
+                                       5.23e-03    1.043    6.060    1.048   0.9
+    packet_selecter (packet_selecter)     0.000    0.000    2.853 2.85e-06   0.0
+  BUFFER (buffer)                      4.39e-02   53.855  427.661   53.899  46.8
+    fifo_ram (fifo_ram)                3.35e-02   52.417  414.315   52.451  45.6
+      sub_60 (fifo_ram_DW01_sub_0)        0.000    0.000    2.686 2.69e-06   0.0
+    get_ptr_controller (get_ptr_controller)
+                                       3.62e-03    0.717    6.840    0.721   0.6
+      add_35 (get_ptr_controller_DW01_inc_0)
+                                          0.000    0.000    1.541 1.54e-06   0.0
+    store_ptr_controller (store_ptr_controller)
+                                       5.74e-03    0.719    6.400    0.725   0.6
+      add_35 (store_ptr_controller_DW01_inc_0)
+                                          0.000    0.000    1.541 1.54e-06   0.0
+  AHB_SLAVE (ahb_slave)                  17.465   29.763  128.067   47.228  41.0
+1

@@ -1,0 +1,497 @@
+Synthesizing design: rcv_block.sv
+dc_shell-t -x "source -echo do_mapping.tcl"
+                                        
+                           Design Compiler Graphical 
+                                 DC Ultra (TM)
+                                  DFTMAX (TM)
+                              Power Compiler (TM)
+                                 DesignWare (R)
+                                 DC Expert (TM)
+                               Design Vision (TM)
+                               HDL Compiler (TM)
+                               VHDL Compiler (TM)
+                                  DFT Compiler
+                               Design Compiler(R)
+                                        
+               Version K-2015.06-SP1 for linux64 - Jul 21, 2015 
+                                        
+                    Copyright (c) 1988 - 2015 Synopsys, Inc.
+   This software and the associated documentation are proprietary to Synopsys,
+ Inc. This software may only be used in accordance with the terms and conditions
+ of a written license agreement with Synopsys, Inc. All other use, reproduction,
+            or distribution of this software is strictly prohibited.
+Initializing...
+Initializing gui preferences from file  /home/ecegridfs/a/mg173/.synopsys_dv_prefs.tcl
+# Step 1:  Read in the source file
+analyze -format sverilog -lib WORK {sync_high.sv sync_low.sv eop_detect.sv decoder.sv edge_detector.sv timer.sv flex_counter.sv rcu.sv stp_sr_8_lsb.sv flex_stp_sr.sv rx_data_ready.sv rx_packet.sv store_2_byte_buffer.sv count_to_2.sv count_to_64.sv rcv_block.sv}
+Running PRESTO HDLC
+Compiling source file ./source/sync_high.sv
+Compiling source file ./source/sync_low.sv
+Compiling source file ./source/eop_detect.sv
+Compiling source file ./source/decoder.sv
+Compiling source file ./source/edge_detector.sv
+Compiling source file ./source/timer.sv
+Compiling source file ./source/flex_counter.sv
+Compiling source file ./source/rcu.sv
+Compiling source file ./source/stp_sr_8_lsb.sv
+Compiling source file ./source/flex_stp_sr.sv
+Compiling source file ./source/rx_data_ready.sv
+Compiling source file ./source/rx_packet.sv
+Compiling source file ./source/store_2_byte_buffer.sv
+Compiling source file ./source/count_to_2.sv
+Compiling source file ./source/count_to_64.sv
+Compiling source file ./source/rcv_block.sv
+Presto compilation completed successfully.
+Loading db file '/package/eda/cells/OSU/v2.7/synopsys/lib/ami05/osu05_stdcells.db'
+Loading db file '/package/eda/synopsys/syn-K-2015.06-SP1/libraries/syn/dw_foundation.sldb'
+elaborate rcv_block -lib WORK
+Loading db file '/package/eda/synopsys/syn-K-2015.06-SP1/libraries/syn/gtech.db'
+Loading db file '/package/eda/synopsys/syn-K-2015.06-SP1/libraries/syn/standard.sldb'
+  Loading link library 'osu05_stdcells'
+  Loading link library 'gtech'
+Running PRESTO HDLC
+Presto compilation completed successfully.
+Elaborated 1 design.
+Current design is now 'rcv_block'.
+Information: Building the design 'sync_high'. (HDL-193)
+
+Inferred memory devices in process
+	in routine sync_high line 15 in file
+		'./source/sync_high.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|    sync_out_reg     | Flip-flop |   1   |  N  | N  | N  | Y  | N  | N  | N  |
+|      meta_reg       | Flip-flop |   1   |  N  | N  | N  | Y  | N  | N  | N  |
+===============================================================================
+Presto compilation completed successfully.
+Information: Building the design 'sync_low'. (HDL-193)
+
+Inferred memory devices in process
+	in routine sync_low line 15 in file
+		'./source/sync_low.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|    sync_out_reg     | Flip-flop |   1   |  N  | N  | Y  | N  | N  | N  | N  |
+|      meta_reg       | Flip-flop |   1   |  N  | N  | Y  | N  | N  | N  | N  |
+===============================================================================
+Presto compilation completed successfully.
+Information: Building the design 'eop_detect'. (HDL-193)
+
+Inferred memory devices in process
+	in routine eop_detect line 22 in file
+		'./source/eop_detect.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|       eop_reg       | Flip-flop |   1   |  N  | N  | Y  | N  | N  | N  | N  |
+===============================================================================
+Presto compilation completed successfully.
+Information: Building the design 'decoder'. (HDL-193)
+
+Inferred memory devices in process
+	in routine decoder line 24 in file
+		'./source/decoder.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|    old_data_reg     | Flip-flop |   1   |  N  | N  | N  | Y  | N  | N  | N  |
+|    new_data_reg     | Flip-flop |   1   |  N  | N  | N  | Y  | N  | N  | N  |
+===============================================================================
+Presto compilation completed successfully.
+Information: Building the design 'edge_detector'. (HDL-193)
+
+Inferred memory devices in process
+	in routine edge_detector line 11 in file
+		'./source/edge_detector.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|   old_d_plus_reg    | Flip-flop |   1   |  N  | N  | N  | Y  | N  | N  | N  |
+===============================================================================
+Presto compilation completed successfully.
+Information: Building the design 'timer'. (HDL-193)
+
+Statistics for case statements in always block at line 33 in file
+	'./source/timer.sv'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|            35            |     no/auto      |
+===============================================
+
+Statistics for case statements in always block at line 59 in file
+	'./source/timer.sv'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|            63            |     no/auto      |
+===============================================
+
+Statistics for case statements in always block at line 98 in file
+	'./source/timer.sv'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|           100            |     no/auto      |
+===============================================
+
+Statistics for case statements in always block at line 133 in file
+	'./source/timer.sv'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|           137            |     no/auto      |
+===============================================
+
+Inferred memory devices in process
+	in routine timer line 50 in file
+		'./source/timer.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|     state1_reg      | Flip-flop |   2   |  Y  | N  | Y  | N  | N  | N  | N  |
+===============================================================================
+
+Inferred memory devices in process
+	in routine timer line 124 in file
+		'./source/timer.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|     state2_reg      | Flip-flop |   3   |  Y  | N  | Y  | N  | N  | N  | N  |
+===============================================================================
+Presto compilation completed successfully.
+Information: Building the design 'rcu'. (HDL-193)
+
+Statistics for case statements in always block at line 33 in file
+	'./source/rcu.sv'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|            35            |     no/auto      |
+===============================================
+
+Statistics for case statements in always block at line 148 in file
+	'./source/rcu.sv'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|           158            |     no/auto      |
+===============================================
+
+Inferred memory devices in process
+	in routine rcu line 141 in file
+		'./source/rcu.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|      state_reg      | Flip-flop |   5   |  Y  | N  | Y  | N  | N  | N  | N  |
+===============================================================================
+Presto compilation completed successfully.
+Information: Building the design 'stp_sr_8_lsb'. (HDL-193)
+Presto compilation completed successfully.
+Information: Building the design 'rx_data_ready'. (HDL-193)
+
+Statistics for case statements in always block at line 15 in file
+	'./source/rx_data_ready.sv'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|            17            |    auto/auto     |
+===============================================
+
+Inferred memory devices in process
+	in routine rx_data_ready line 35 in file
+		'./source/rx_data_ready.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|      state_reg      | Flip-flop |   1   |  N  | N  | Y  | N  | N  | N  | N  |
+===============================================================================
+Presto compilation completed successfully.
+Information: Building the design 'rx_packet'. (HDL-193)
+
+Statistics for case statements in always block at line 12 in file
+	'./source/rx_packet.sv'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|            15            |     no/auto      |
+===============================================
+
+Inferred memory devices in process
+	in routine rx_packet line 41 in file
+		'./source/rx_packet.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|    rx_packet_reg    | Flip-flop |   4   |  Y  | N  | Y  | N  | N  | N  | N  |
+===============================================================================
+Presto compilation completed successfully.
+Information: Building the design 'store_2_byte_buffer'. (HDL-193)
+
+Inferred memory devices in process
+	in routine store_2_byte_buffer line 33 in file
+		'./source/store_2_byte_buffer.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|    rcv_data_reg     | Flip-flop |   8   |  Y  | N  | Y  | N  | N  | N  | N  |
+|   new_2_byte_reg    | Flip-flop |   8   |  Y  | N  | Y  | N  | N  | N  | N  |
+|   old_2_byte_reg    | Flip-flop |   8   |  Y  | N  | Y  | N  | N  | N  | N  |
+===============================================================================
+Presto compilation completed successfully.
+Information: Building the design 'count_to_2'. (HDL-193)
+
+Inferred memory devices in process
+	in routine count_to_2 line 25 in file
+		'./source/count_to_2.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|      count_reg      | Flip-flop |   2   |  Y  | N  | Y  | N  | N  | N  | N  |
+===============================================================================
+Presto compilation completed successfully.
+Information: Building the design 'count_to_64'. (HDL-193)
+
+Inferred memory devices in process
+	in routine count_to_64 line 25 in file
+		'./source/count_to_64.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|      count_reg      | Flip-flop |   7   |  Y  | N  | Y  | N  | N  | N  | N  |
+===============================================================================
+Presto compilation completed successfully.
+Information: Building the design 'flex_counter'. (HDL-193)
+
+Inferred memory devices in process
+	in routine flex_counter line 21 in file
+		'./source/flex_counter.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|  rollover_flag_reg  | Flip-flop |   1   |  N  | N  | Y  | N  | N  | N  | N  |
+|    count_out_reg    | Flip-flop |   4   |  Y  | N  | Y  | N  | N  | N  | N  |
+===============================================================================
+Presto compilation completed successfully.
+Information: Building the design 'flex_stp_sr' instantiated from design 'stp_sr_8_lsb' with
+	the parameters "SHIFT_MSB=0,NUM_BITS=8". (HDL-193)
+
+Inferred memory devices in process
+	in routine flex_stp_sr_NUM_BITS8_SHIFT_MSB0 line 21 in file
+		'./source/flex_stp_sr.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|  parallel_out_reg   | Flip-flop |   8   |  Y  | N  | N  | Y  | N  | N  | N  |
+===============================================================================
+Presto compilation completed successfully.
+uniquify
+Information: Uniquified 2 instances of design 'flex_counter'. (OPT-1056)
+# Step 2: Set design constraints
+# Uncomment below to set timing, area, power, etc. constraints
+# set_max_delay <delay> -from "<input>" -to "<output>"
+# set_max_area <area>
+# set_max_total_power <power> mW
+# Step 3: Compile the design
+compile -map_effort medium
+Information: Checking out the license 'DesignWare'. (SEC-104)
+Information: Evaluating DesignWare library utilization. (UISN-27)
+
+============================================================================
+| DesignWare Building Block Library  |         Version         | Available |
+============================================================================
+| Basic DW Building Blocks           | K-2015.06-DWBB_201506.1 |     *     |
+| Licensed DW Building Blocks        | K-2015.06-DWBB_201506.1 |     *     |
+============================================================================
+
+
+Information: There are 28 potential problems in your design. Please run 'check_design' for more information. (LINT-99)
+
+
+
+  Beginning Pass 1 Mapping
+  ------------------------
+  Processing 'count_to_64'
+  Processing 'count_to_2'
+  Processing 'store_2_byte_buffer'
+  Processing 'rx_packet'
+  Processing 'rx_data_ready'
+  Processing 'flex_stp_sr_NUM_BITS8_SHIFT_MSB0'
+  Processing 'stp_sr_8_lsb'
+  Processing 'rcu'
+  Processing 'flex_counter_0'
+Information: Added key list 'DesignWare' to design 'flex_counter_0'. (DDB-72)
+  Processing 'timer'
+  Processing 'edge_detector'
+  Processing 'decoder'
+  Processing 'eop_detect'
+  Processing 'sync_low'
+  Processing 'sync_high'
+  Processing 'rcv_block'
+
+  Updating timing information
+Information: Updating design information... (UID-85)
+Information: Design 'rcv_block' has no optimization constraints set. (OPT-108)
+
+  Beginning Implementation Selection
+  ----------------------------------
+  Processing 'count_to_64_DW01_inc_0'
+  Processing 'flex_counter_0_DW01_dec_0'
+  Processing 'flex_counter_1_DW01_dec_0'
+
+  Beginning Mapping Optimizations  (Medium effort)
+  -------------------------------
+  Structuring 'flex_counter_0'
+  Mapping 'flex_counter_0'
+  Structuring 'flex_stp_sr_NUM_BITS8_SHIFT_MSB0'
+  Mapping 'flex_stp_sr_NUM_BITS8_SHIFT_MSB0'
+  Structuring 'flex_counter_1'
+  Mapping 'flex_counter_1'
+  Structuring 'count_to_64'
+  Mapping 'count_to_64'
+  Structuring 'count_to_2'
+  Mapping 'count_to_2'
+  Structuring 'store_2_byte_buffer'
+  Mapping 'store_2_byte_buffer'
+  Structuring 'rx_packet'
+  Mapping 'rx_packet'
+  Structuring 'rx_data_ready'
+  Mapping 'rx_data_ready'
+  Structuring 'rcu'
+  Mapping 'rcu'
+  Structuring 'timer'
+  Mapping 'timer'
+  Structuring 'edge_detector'
+  Mapping 'edge_detector'
+  Structuring 'decoder'
+  Mapping 'decoder'
+  Structuring 'eop_detect'
+  Mapping 'eop_detect'
+
+                                  TOTAL                                      
+   ELAPSED            WORST NEG   SETUP    DESIGN                            
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT         
+  --------- --------- --------- --------- --------- -------------------------
+    0:00:01  234891.0      0.00       0.0       0.7                          
+    0:00:01  234891.0      0.00       0.0       0.7                          
+    0:00:01  234891.0      0.00       0.0       0.7                          
+    0:00:01  234891.0      0.00       0.0       0.7                          
+    0:00:01  234891.0      0.00       0.0       0.7                          
+    0:00:01  234891.0      0.00       0.0       0.7                          
+    0:00:01  234891.0      0.00       0.0       0.7                          
+    0:00:01  234891.0      0.00       0.0       0.7                          
+    0:00:01  234891.0      0.00       0.0       0.7                          
+    0:00:01  234891.0      0.00       0.0       0.2                          
+    0:00:01  234891.0      0.00       0.0       0.0                          
+    0:00:01  234891.0      0.00       0.0       0.0                          
+    0:00:01  234891.0      0.00       0.0       0.0                          
+    0:00:01  234891.0      0.00       0.0       0.0                          
+
+
+
+  Beginning Delay Optimization Phase
+  ----------------------------------
+
+                                  TOTAL                                      
+   ELAPSED            WORST NEG   SETUP    DESIGN                            
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT         
+  --------- --------- --------- --------- --------- -------------------------
+    0:00:01  234891.0      0.00       0.0       0.0                          
+    0:00:01  234891.0      0.00       0.0       0.0                          
+    0:00:01  234891.0      0.00       0.0       0.0                          
+
+
+  Beginning Area-Recovery Phase  (cleanup)
+  -----------------------------
+
+                                  TOTAL                                      
+   ELAPSED            WORST NEG   SETUP    DESIGN                            
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT         
+  --------- --------- --------- --------- --------- -------------------------
+    0:00:01  234891.0      0.00       0.0       0.0                          
+    0:00:01  234891.0      0.00       0.0       0.0                          
+    0:00:01  234027.0      0.00       0.0       0.0                          
+    0:00:01  233667.0      0.00       0.0       0.0                          
+    0:00:01  233379.0      0.00       0.0       0.0                          
+    0:00:01  233091.0      0.00       0.0       0.0                          
+    0:00:01  232803.0      0.00       0.0       0.0                          
+    0:00:01  232803.0      0.00       0.0       0.0                          
+    0:00:01  232803.0      0.00       0.0       0.0                          
+    0:00:01  232803.0      0.00       0.0       0.0                          
+    0:00:01  232803.0      0.00       0.0       0.0                          
+    0:00:01  232803.0      0.00       0.0       0.0                          
+    0:00:01  232803.0      0.00       0.0       0.0                          
+    0:00:01  232803.0      0.00       0.0       0.0                          
+Loading db file '/package/eda/cells/OSU/v2.7/synopsys/lib/ami05/osu05_stdcells.db'
+
+
+Note: Symbol # after min delay cost means estimated hold TNS across all active scenarios 
+
+
+  Optimization Complete
+  ---------------------
+# Step 4: Output reports
+report_timing -path full -delay max -max_paths 1 -nworst 1 > reports/rcv_block.rep
+report_area >> reports/rcv_block.rep
+report_power -hier >> reports/rcv_block.rep
+# Step 5: Output final VHDL and Verilog files
+write_file -format verilog -hierarchy -output "mapped/rcv_block.v"
+Writing verilog file '/home/ecegridfs/a/mg173/ece337/CDL_Receiver/mapped/rcv_block.v'.
+Warning: Verilog 'assign' or 'tran' statements are written out. (VO-4)
+echo "\nScript Done\n"
+
+Script Done
+
+echo "\nChecking Design\n"
+
+Checking Design
+
+check_design
+ 
+****************************************
+check_design summary:
+Version:     K-2015.06-SP1
+Date:        Fri Apr 28 12:52:48 2023
+****************************************
+
+                   Name                                            Total
+--------------------------------------------------------------------------------
+Inputs/Outputs                                                      6
+    Unconnected ports (LINT-28)                                     5
+    Shorted outputs (LINT-31)                                       1
+
+Cells                                                               7
+    Connected to power or ground (LINT-32)                          5
+    Nets connected to multiple pins on same cell (LINT-33)          2
+--------------------------------------------------------------------------------
+
+Warning: In design 'rcu', port 'new_2_byte[7]' is not connected to any nets. (LINT-28)
+Warning: In design 'rcu', port 'new_2_byte[6]' is not connected to any nets. (LINT-28)
+Warning: In design 'rcu', port 'new_2_byte[5]' is not connected to any nets. (LINT-28)
+Warning: In design 'rcu', port 'new_2_byte[4]' is not connected to any nets. (LINT-28)
+Warning: In design 'rcu', port 'new_2_byte[3]' is not connected to any nets. (LINT-28)
+Warning: In design 'rcu', output port 'w_enable' is connected directly to output port 'ready'. (LINT-31)
+Warning: In design 'timer', a pin on submodule 'CORE1' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'rollover_val[2]' is connected to logic 0. 
+Warning: In design 'timer', a pin on submodule 'CORE1' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'rollover_val[1]' is connected to logic 0. 
+Warning: In design 'timer', a pin on submodule 'CORE2' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'rollover_val[2]' is connected to logic 0. 
+Warning: In design 'timer', a pin on submodule 'CORE2' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'rollover_val[1]' is connected to logic 0. 
+Warning: In design 'timer', a pin on submodule 'CORE2' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'rollover_val[0]' is connected to logic 0. 
+Warning: In design 'timer', the same net is connected to more than one pin on submodule 'CORE1'. (LINT-33)
+   Net '*Logic0*' is connected to pins 'rollover_val[2]', 'rollover_val[1]''.
+Warning: In design 'timer', the same net is connected to more than one pin on submodule 'CORE2'. (LINT-33)
+   Net '*Logic0*' is connected to pins 'rollover_val[2]', 'rollover_val[1]'', 'rollover_val[0]'.
+quit
+
+Thank you...
+Done
+
+
